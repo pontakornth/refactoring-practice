@@ -1,6 +1,9 @@
 import tkinter as tk
 import tkinter.ttk as ttk
 
+DEFAULT_CANVAS_WIDTH = 800
+DEFAULT_CANVAS_HEIGHT = 500
+DEFAULT_UPDATE_DELAY = 33
 
 class GameCanvasElement():
     """Base class for an element on the game canvas, with attributes:
@@ -84,7 +87,11 @@ class GameApp(ttk.Frame):
     on the canvas, start/stop animation, and running the animation loop.
     """
 
-    def __init__(self, parent, canvas_width=800, canvas_height=500, update_delay=33):
+    def __init__(self, parent,
+                 canvas_width=DEFAULT_CANVAS_WIDTH,
+                 canvas_height=DEFAULT_CANVAS_HEIGHT,
+                 update_delay=DEFAULT_UPDATE_DELAY):
+
         super().__init__(parent)
         self.parent = parent
 
@@ -112,6 +119,12 @@ class GameApp(ttk.Frame):
         # Refactor - Use string constant from the framework
         canvas.grid(sticky=tk.NSEW)
         return canvas
+
+    def add_element(self, element: GameElement):
+        self.elements.append(element)
+
+    def remove_element(self, element: GameElement):
+        self.elements.remove(element)
 
     def animate(self):
         """Animate the game and elements inside."""
