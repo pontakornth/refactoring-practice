@@ -12,6 +12,11 @@ Each subdirectory contains some code that needs refactoring.
 
 Refactor timestamp.py.  2 or 3 refactorings are possible.
 
+### Refactoring done
+
+- Add explanatory variables to explains `args` arguments to increase readability.
+- Extract time validation method to separate validation from creation.
+
 
 ## `game_framework/gamelib.py`
 
@@ -21,6 +26,12 @@ Look for refactorings in the class `GameApp`.
 
 * Encapsulate a collection - provide behavior that subclasses of GameApp need instead of requiring them to manipulate a collection that belongs to the GameApp class.
   - Hint: `elements`
+
+### Refactoring Done
+
+- Make `create_canvas` return a canvas and init `canvas` in `__init__` instead to avoid side effects
+- Make `create_canvas` accept parameters to increase readability.
+- Extract some magic number to constants.
 
 ## `recipe/recipe.py` and `recipe/main.py`
 
@@ -36,6 +47,9 @@ The Recipe class defines a recipe for a hot beverage with attributes:
 
 Refactor `main.py`.  What can you do to eliminate the long, boring code?
 
+### Refactoring Done
+
+- Extract redundant creation code to `create_recipe` function to increase readability.
 
 
 
@@ -43,6 +57,6 @@ Refactor `main.py`.  What can you do to eliminate the long, boring code?
 
 ## Resources
 
-* <https://refactoringguru.com/refactoring> 
+* <https://refactoring.guru/refactoring> 
 * *Refactoring - Improving the Design of Existing Code* by Martin Fowler.  The bible on refactoring.  The first 4 chapters explain the fundamentals.
 * <https://refactoring.com> Online version of Fowler's book, but lacks explanation of the refactorings.
