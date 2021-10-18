@@ -93,7 +93,7 @@ class GameApp(ttk.Frame):
 
         self.update_delay = update_delay
 
-        self.grid(sticky="news")
+        self.grid(sticky=tk.NSEW)
 
         self.canvas = self.create_canvas(canvas_width, canvas_height)
 
@@ -103,13 +103,14 @@ class GameApp(ttk.Frame):
         self.parent.bind('<KeyPress>', self.on_key_pressed)
         self.parent.bind('<KeyRelease>', self.on_key_released)
 
-    # Refactoring - Use return instead of side effects
-    # Refactoring - Add parameters
+    # Refactor - Use return instead of side effects
+    # Refactor - Add parameters
     def create_canvas(self, width, height):
         canvas = tk.Canvas(self, borderwidth=0,
                            width=width, height=height,
                            highlightthickness=0)
-        canvas.grid(sticky="news")
+        # Refactor - Use string constant from the framework
+        canvas.grid(sticky=tk.NSEW)
         return canvas
 
     def animate(self):
