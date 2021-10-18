@@ -1,6 +1,7 @@
 import tkinter as tk
 import tkinter.ttk as ttk
 
+
 class GameCanvasElement():
     """Base class for an element on the game canvas, with attributes:
 
@@ -53,14 +54,14 @@ class Text(GameCanvasElement):
 
     def init_canvas_object(self):
         self.canvas_object_id = self.canvas.create_text(
-            self.x, 
+            self.x,
             self.y,
             text=self.text)
 
     def set_text(self, text):
         self.text = text
         self.canvas.itemconfigure(self.canvas_object_id, text=text)
-        
+
 
 class Sprite(GameCanvasElement):
     def __init__(self, game_app, image_filename, x=0, y=0):
@@ -70,45 +71,49 @@ class Sprite(GameCanvasElement):
     def init_canvas_object(self):
         self.photo_image = tk.PhotoImage(file=self.image_filename)
         self.canvas_object_id = self.canvas.create_image(
-            self.x, 
+            self.x,
             self.y,
             image=self.photo_image)
 
 
-class GameApp(ttk.Frame): 
+class GameApp(ttk.Frame):
     """Base class for a game.  This class creates a canvas, manages 
     a collection of game elements, and controls animation.  
 
     It provides several call-back methods for initializing elements
     on the canvas, start/stop animation, and running the animation loop.
     """
-    
+
     def __init__(self, parent, canvas_width=800, canvas_height=500, update_delay=33):
         super().__init__(parent)
         self.parent = parent
-        
+
         self.canvas_width = canvas_width
         self.canvas_height = canvas_height
-        
+
         self.update_delay = update_delay
 
         self.grid(sticky="news")
-        self.create_canvas()
+
+        self.canvas = self.create_canvas(canvas_width, canvas_height)
 
         self.elements = []
         self.init_game()
 
         self.parent.bind('<KeyPress>', self.on_key_pressed)
         self.parent.bind('<KeyRelease>', self.on_key_released)
-        
-    #TODO refactor this - don't depend on side effects
-    def create_canvas(self):
-        self.canvas = tk.Canvas(self, borderwidth=0,
-            width=self.canvas_width, height=self.canvas_height, 
-            highlightthickness=0)
-        self.canvas.grid(sticky="news")
+
+    # Refactoring - Use return instead of side effects
+    # Refactoring - Add parameters
+    def create_canvas(self, width, height):
+        canvas = tk.Canvas(self, borderwidth=0,
+                           width=width, height=height,
+                           highlightthickness=0)
+        canvas.grid(sticky="news")
+        return canvas
 
     def animate(self):
+        """Animate the game and elements inside."""
         self.pre_update()
 
         for element in self.elements:
